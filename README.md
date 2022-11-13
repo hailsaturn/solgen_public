@@ -20,6 +20,6 @@ For more, write `python3 solgen.py -h`. The features are minimal at the moment.
 	- The #writepath header specifies the directory that the files will be written to. Will be created if it doesn't exist.
 	- The #csv header specifies the name of the CSV to import variables from
 	- The #evaluation header specifies the start of a sequence of variables/functions to be defined
-	- Once "\documentclass" is detected in a line, it is assumed that the file from that point on is the desired LaTeX file. 
+	- Once "\documentclass" is detected in a line, it is assumed that all lines from that point on comprise the LaTeX template.
 
 This is still a complete work in progress, but I'm sharing the minimal version by request.
