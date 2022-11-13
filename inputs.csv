@@ -1,0 +1,3 @@
+﻿Surname,First name,Student ID,Email address,Question 1,Question 2,Question 3,Question 4,Question 5,Question 6,,,,,,,,
+Jackson,Michael,12345,email@email.com,"{""p"":0.35, ""q"":0.12, ""c"":5.6}","{""animal"":""cat""}","{""index"":1, ""c"":""1/2"", ""d"":""3/4"", ""e"":""5/6""}","{""str"":""zyxw""}",Not JSON!?,"{""p"":0.35, ""q"":0.12, ""c"":5.6}",,,,,,,,
+Mackson,Jichael,54321,email@email.com,"{""p"":0.11, ""q"":0.05, ""c"":""3/2""}","{""animal"":""emu""}","{""index"":0, ""c"":""1/2"", ""d"":0.75, ""e"":""5/6""}","{""str"":""abcd""}",Still not JSON,"{""p"":0.11, ""q"":0.05, ""c"":3/2}",,,,,,,,

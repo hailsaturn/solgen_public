@@ -1,0 +1,160 @@
+#colnames
+0: surname
+1: firstName
+2: studentID
+3: email
+4: q1
+5: q2
+6: q3	
+7: q4
+8: q5
+
+#identifier
+2
+
+#writepath
+Output
+
+#csv 
+inputs.csv
+
+#evaluation
+prod1: q1_p * q1_q
+prod2: prod1 + q1_c
+formula: q1_p + x*q1_q + q1_c*x^2
+legs: q2_animal == "cat" => 4 else 2
+q3_elements: [5,6,7,8]
+q3_choice: q3_elements[q3_index]
+q3_cd: q3_c*q3_d
+q3_ce: q3_c*q3_e
+q3_cde: q3_c*q3_d + q3_e
+q3_cde2: q3_c*q3_d + q3_e + 0.5
+q3_cde2_round: round(q3_cde2,3)
+f : x -> x^2
+g : x -> 2*x/7
+h : x,y -> x+y
+flist: [f,g,h]
+fevals: [f,g,h](3)
+fe: fevals[0]
+ge: fevals[1]
+he: fevals[2]
+he2: h(1,2)
+q3c1: q3_c(1)
+q3c12: q3_c(1,2)
+q3cev: q3_c()
+
+\documentclass[a4paper,12pt]{article}
+% When the string "\documentclass" is detected, the solgen importer moves to "LaTeX mode", importing the file as LaTeX text and applying substitutions as needed.
+% You can use any packages you like. It's treated as a standard LaTeX file
+
+\usepackage{amsmath,amssymb,geometry}
+\geometry{tmargin=1.2cm,bmargin=1.7cm,lmargin=1.2cm,rmargin=1.7cm}
+
+
+\begin{document}
+
+{
+\Large
+\noindent 
+\bfseries
+Text generated for @firstName @surname (@studentID)
+}
+
+\bigskip
+\noindent
+
+\begin{enumerate}
+	\item
+		Note: the number specified under the \#identifier banner is the column number used to uniquely identify each row.
+		It is used to name the resulting LaTeX files.
+	\item 
+		Column E (index 4) has colname q1, so its variables are prefixed with ``q4''.
+
+		Use variables in the template by prefixing them with an @ sign.
+		You can write the variable by using double @ signs, e.g. \verb|@@q1_p|.
+		Variables that are undefined are just printed in the tex file, e.g. @asdfgh 
+		\begin{itemize}
+			\item \verb|@@q1_p| is $@q1_p$
+			\item \verb|@@q1_q| is $@q1_q$
+			\item \verb|@@q1_c| is $@q1_c$
+			\item \verb|@@q1_d| is $@q1_d$
+		\end{itemize}
+
+		Under the \#evaluation section, I used those variables to calculate
+
+		\begin{itemize}
+			\item $@q1_p \times @q1_q = @prod1$
+			\item $@q1_p \times @q1_q + @q1_c = @prod2$
+		\end{itemize}
+
+		Formulas can be printed, but I haven't yet made them pretty:
+		\[
+			@formula
+		\]
+		
+	\item
+		A @q2_animal has @legs legs.
+		
+	\item 
+		Lists are supported.
+		The element at index @q3_index of @q3_elements is @q3_choice
+
+		Fractions are assumed until a floating point number is introduced.
+
+		\begin{align*}
+			c &= @q3_c\\
+			d &= @q3_d\\
+			e &= @q3_e\\
+			c\cdot d &= @q3_cd\\
+			c\cdot e &= @q3_ce\\
+			c\cdot d + e &= @q3_cde\\
+			c\cdot d + e + 0.5 &= @q3_cde2\\
+			c\cdot d + e + 0.5 &\approx @q3_cde2_round
+		\end{align*}
+		The last line uses the built-in \texttt{round} function.
+		Only a handful of builtins are implemented.
+			But you can add them easily; refer to the Environment class in syntaxtree.py.
+
+
+		Functions can be defined and evaluated. 
+		\begin{align*}
+			f(3) &= @fe\\
+			g(3) &= @ge\\
+			h(3) &= @he
+		\end{align*}
+		"Void" is used when something is undefined or goes wrong.
+		In this case, $h$ is a function that needs two variables:
+		$h(1,2) = @he2$.
+		
+		Note that the variable @@fevals is a list of functions.
+		Evaluating a list, e.g. \verb|[f,g,h](1)| passes that argument to each element of the list. 
+
+		What happens if you try to evaluate something that isn't a function? 
+		Undefined, because everything is considered a function.
+		Numbers/strings/etc. are treated as functions of arbitrary arity. 
+		E.g. since \verb|@@q3_c| contains the number $@q3_c$, we can try evaluating it:
+		\begin{itemize}
+			\item \verb|q3_c(1)| yields $@q3c1$
+			\item \verb|q3_c(1,2)| yields $@q3c12$
+			\item \verb|q3_c()| yields $@q3cev$
+		\end{itemize}
+		
+
+
+	\item
+		Strings are just strings.
+
+		The string in \verb|@@q4_str| is @q4_str.
+
+	\item 
+		If the column is not in JSON format, it is imported as a string.
+
+		Variable \verb|@@q5| contains the string ``@q5''
+
+	\item
+		Because Column J (index 9) is not included under \#colnames, it is not imported from the spreadsheet.
+\end{enumerate}
+
+
+
+\end{document}
